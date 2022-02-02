@@ -1,0 +1,26 @@
+{
+  "name": "org-chart-builder",
+  "version": "1.0.0",
+  "description": "Command line app that takes input to create an org chart and display it in a styled web page.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ericbwebdev86/org-chart-builder.git"
+  },
+  "author": "Eric Bates",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ericbwebdev86/org-chart-builder/issues"
+  },
+  "homepage": "https://github.com/ericbwebdev86/org-chart-builder#readme",
+  "dependencies": {
+    "inquirer": "^8.2.0",
+    "jest": "^27.4.7"
+  }
+}
