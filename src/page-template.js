@@ -18,7 +18,7 @@ const buildManagerCard = function (manager) {
 }
 
 //render engineer data in bootstrap card
-const buildMngineerCard = function (engineer) {
+const buildEngineerCard = function (engineer) {
     return `
     <div class="card bg-dark text-light ms-5 me-5 mb-5 pb-2"
                 style="width: 18rem; box-shadow: 0 8px 6px -6px black;">
@@ -123,3 +123,5 @@ const HTMLtemplate = function (cardDeck) {
 
 </html>`;
 }
+
+module.exports = pageBuilder;

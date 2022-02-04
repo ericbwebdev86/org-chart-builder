@@ -22,6 +22,7 @@ const inquirer = require('inquirer');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+const pageBuilder = require('./src/page-template');
 //array for team data
 const teamData = [];
 //capture input
@@ -67,7 +68,7 @@ const promptEmployee = () => {
     return inquirer.prompt([
         {
             type: 'list',
-            name: 'roles',
+            name: 'role',
             message: 'Please choose a team member role.',
             choices: ['Engineer', 'Intern']
         },
@@ -90,13 +91,13 @@ const promptEmployee = () => {
             type: 'input',
             name: 'github',
             message: "What is the engineer's GitHub profile name?",
-            when: (input) => input.roles === 'Engineer'
+            when: (input) => input.role === 'Engineer'
         },
         {
             type: 'input',
             name: 'school',
             message: "What school is the intern from?",
-            when: (input) => input.roles === 'Intern'
+            when: (input) => input.role === 'Intern'
         },
         {
             type: 'confirm',
@@ -104,12 +105,8 @@ const promptEmployee = () => {
             message: "Would you like to add another employee?",
             default: false
         }
-    ]).then((answers) => {
-        if (answers.addConfirm) {
-            return promptEmployee();
-        }
-    }).then(inputEMP => {
-        let { name, id, email, github, school } = inputEMP;
+    ]).then(inputEMP => {
+        let { name, id, email, role, github, school, addConfirm } = inputEMP;
         let employee;
         if (role === 'Engineer') {
             employee = new Engineer(name, id, email, github);
@@ -117,10 +114,34 @@ const promptEmployee = () => {
             employee = new Intern(name, id, email, school);
         }
         teamData.push(employee);
-        console.log(employee);
+        if (addConfirm) {
+            return promptEmployee(teamData);
+        } else {
+            return teamData;
+        }
     })
 }
+//write HTML file and put it in dist folder
+const writeFile = data => {
+    fs.writeFile('./dist/index.html', data, err => {
+        //if error
+        if (err) {
+            console.log(err);
+        } else {
+            //if success print message
+            console.log('Your org chat was created successfully! please see the dist folder.')
+        }
+    })
+};
 
 promptManager()
     .then(promptEmployee)
-    .then(answers => console.log(answers));
+    .then(teamData => {
+        return pageBuilder(teamData);
+    })
+    .then(writeHTML => {
+        return writeFile(writeHTML);
+    })
+    .catch(err => {
+        console.log(err);
+    })
