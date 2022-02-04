@@ -10,7 +10,7 @@ const buildManagerCard = function (manager) {
                 <div class="container-fluid bg-secondary pt-5 pb-5">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">ID: ${manager.id}</li>
-                        <li class="list-group-item">Email: ${manager.email}</li>
+                        <li class="list-group-item">Email: <a href="mailto:${manager.email}">${manager.email}</a></li>
                         <li class="list-group-item">Office Number: ${manager.office}</li>
                     </ul>
                 </div>
@@ -30,8 +30,8 @@ const buildEngineerCard = function (engineer) {
                 <div class="container-fluid bg-secondary pt-5 pb-5">
                     <ul class="list-group list-group-flush">
                     <li class="list-group-item">ID: ${engineer.id}</li>
-                    <li class="list-group-item">Email: ${engineer.email}</li>
-                    <li class="list-group-item">GitHub Profile: https://github.com/${engineer.github}/</li>
+                    <li class="list-group-item">Email: <a href="mailto:${engineer.email}">${engineer.email}</a></li>
+                    <li class="list-group-item">GitHub Profile: <a href="https://github.com/${engineer.github}">https://github.com/${engineer.github}/</a></li>
                     </ul>
                 </div>
 
@@ -49,7 +49,7 @@ const buildInternCard = function (intern) {
                 <div class="container-fluid bg-secondary pt-5 pb-5">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">ID: ${intern.id}</li>
-                        <li class="list-group-item">Email: ${intern.email}</li>
+                        <li class="list-group-item">Email: <a href="mailto:${intern.email}">${intern.email}</a></li>
                         <li class="list-group-item">School: ${intern.school}</li>
                     </ul>
                 </div>
