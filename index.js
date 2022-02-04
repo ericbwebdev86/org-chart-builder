@@ -19,6 +19,10 @@
 //module imports
 const fs = require('fs');
 const inquirer = require('inquirer');
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+//array for team data
 const teamData = [];
 //capture input
 // WHEN I start the application
@@ -53,10 +57,12 @@ const promptManager = () => {
             message: "What is the manager's office number?"
         }
     ]).then(inputMGMT => {
-        let = { name, id, email, office } = inputMGMT;
-        console.log(inputMGMT);
+        let { name, id, email, office } = inputMGMT;
+        let manager = new Manager(name, id, email, office);
+        teamData.push(manager);
+        console.log(manager);
     })
-}
+};
 const promptEmployee = () => {
     return inquirer.prompt([
         {
@@ -103,8 +109,15 @@ const promptEmployee = () => {
             return promptEmployee();
         }
     }).then(inputEMP => {
-        let = { name, id, email, github, school } = inputEMP;
-        console.log(inputEMP);
+        let { name, id, email, github, school } = inputEMP;
+        let employee;
+        if (role === 'Engineer') {
+            employee = new Engineer(name, id, email, github);
+        } else if (role === 'Intern') {
+            employee = new Intern(name, id, email, school);
+        }
+        teamData.push(employee);
+        console.log(employee);
     })
 }
 
