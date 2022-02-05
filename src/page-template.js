@@ -75,7 +75,7 @@ pageBuilder = (data) => {
             teamCardArray.push(eCard);
         }
         //intern card
-        if (role === 'Engineer') {
+        if (role === 'Intern') {
             let iCard = buildInternCard(teamMember);
             teamCardArray.push(iCard);
         }
@@ -118,8 +118,9 @@ const HTMLtemplate = function (cardDeck) {
         </div>
 
     </div>
+    
 
-    <footer class="bg-dark text-success text-center pt-2 pb-2">&copy2022 Eric Bates</footer>
+    <footer class="bg-dark text-success text-center pt-2 pb-2 mt-5 fixed-bottom">&copy2022 Eric Bates</footer>
 </body>
 
 </html>`;

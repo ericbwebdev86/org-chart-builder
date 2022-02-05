@@ -5,15 +5,13 @@
 // THEN my default email program opens and populates the TO field of the email with the address
 // WHEN I click on the GitHub username
 // THEN that GitHub profile opens in a new tab
-
 // WHEN I enter the team manager’s name, employee ID, email address, and office number
 // THEN I am presented with a menu with the option to add an engineer or an intern or to finish building my team
 // WHEN I select the engineer option
 // THEN I am prompted to enter the engineer’s name, ID, email, and GitHub username, and I am taken back to the menu
 // WHEN I select the intern option
-// THEN I am prompted to enter the intern’s name, ID, email, and school, and I am taken back to the menu
-// WHEN I decide to finish building my team
-// THEN I exit the application, and the HTML is generated
+
+
 
 
 //module imports
@@ -23,11 +21,11 @@ const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const pageBuilder = require('./src/page-template');
-//array for team data
+
+//array for team member data
 const teamData = [];
-//capture input
-// WHEN I start the application
-// THEN I am prompted to enter the team manager’s name, employee ID, email address, and office number
+
+//capture input for manager
 const promptManager = () => {
     return inquirer.prompt([
         {
@@ -58,20 +56,22 @@ const promptManager = () => {
             message: "What is the manager's office number?"
         }
     ]).then(inputMGMT => {
-        let { name, id, email, office } = inputMGMT;
-        let manager = new Manager(name, id, email, office);
+        // let { name, id, email, office } = inputMGMT;
+        let manager = new Manager(inputMGMT.name, inputMGMT.id, inputMGMT.email, inputMGMT.office);
         teamData.push(manager);
         console.log(manager);
     })
 };
 const promptEmployee = () => {
     return inquirer.prompt([
+        //select role
         {
             type: 'list',
             name: 'role',
             message: 'Please choose a team member role.',
             choices: ['Engineer', 'Intern']
         },
+        //prompts for shared employee information
         {
             type: 'input',
             name: 'name',
@@ -87,33 +87,43 @@ const promptEmployee = () => {
             name: 'email',
             message: "What is the employee's email address?"
         },
+        //if engineer then prompt for github
         {
             type: 'input',
             name: 'github',
             message: "What is the engineer's GitHub profile name?",
             when: (input) => input.role === 'Engineer'
         },
+        //if intern prompt for school
         {
             type: 'input',
             name: 'school',
             message: "What school is the intern from?",
             when: (input) => input.role === 'Intern'
         },
+        // if true add another employee start over at role
+        //if false end prompts
         {
             type: 'confirm',
             name: 'addConfirm',
             message: "Would you like to add another employee?",
             default: false
         }
-    ]).then(inputEMP => {
-        let { name, id, email, role, github, school, addConfirm } = inputEMP;
+    ]).then(promptEmployeeInput => {
+        //destructure answers to promptemployeeinput
+        let { name, id, email, role, github, school, addConfirm } = promptEmployeeInput;
+        //initialize employee
         let employee;
         if (role === 'Engineer') {
             employee = new Engineer(name, id, email, github);
-        } else if (role === 'Intern') {
+            console.log(employee);
+        } if (role === 'Intern') {
             employee = new Intern(name, id, email, school);
+            console.log(employee);
         }
         teamData.push(employee);
+
+
         if (addConfirm) {
             return promptEmployee(teamData);
         } else {
@@ -144,4 +154,4 @@ promptManager()
     })
     .catch(err => {
         console.log(err);
-    })
+    });
