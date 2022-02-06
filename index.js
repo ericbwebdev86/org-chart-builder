@@ -27,6 +27,15 @@ const teamData = [];
 
 //capture input for manager
 const promptManager = () => {
+    console.log(`
+
+    <><><><><><><><><><><><><><><><><><><>
+
+    Thank you for using Org Chart Builder!
+
+    <><><><><><><><><><><><><><><><><><><>
+
+    `);
     return inquirer.prompt([
         {
             type: 'input',
@@ -43,26 +52,58 @@ const promptManager = () => {
         {
             type: 'input',
             name: 'id',
-            message: "What is the manager's ID number?"
+            message: "What is the manager's ID number? (Required - Number)",
+            validate: idInput => {
+                if (isNaN(idInput)) {
+                    console.log("Manager's ID is required and must be a number.")
+                } else {
+                    return true;
+                }
+            }
         },
         {
             type: 'input',
             name: 'email',
-            message: "What is the manager's email address?"
+            message: "What is the manager's email address? (required)",
+            validate: emailInput => {
+                if (emailInput) {
+                    return true;
+                } else {
+                    console.log("You need to enter the manager's email.")
+                }
+            }
         },
         {
             type: 'input',
             name: 'office',
-            message: "What is the manager's office number?"
+            message: "What is the manager's office number? (required)",
+            validate: officeInput => {
+                if (officeInput) {
+                    return true;
+                } else {
+                    console.log("The manager's office designation must be entered.")
+                }
+            }
         }
-    ]).then(inputMGMT => {
+    ]).then(mgrInput => {
         // let { name, id, email, office } = inputMGMT;
-        let manager = new Manager(inputMGMT.name, inputMGMT.id, inputMGMT.email, inputMGMT.office);
+        let manager = new Manager(mgrInput.name, mgrInput.id, mgrInput.email, mgrInput.office);
         teamData.push(manager);
         console.log(manager);
     })
 };
 const promptEmployee = () => {
+    console.log(`
+
+    ()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+
+    This is the employee portion. You will have to choose a role; 
+    either Engineer or Intern. Either required slightly different 
+    information. Feel free to add as many as you want!
+
+    ()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()
+    
+    `);
     return inquirer.prompt([
         //select role
         {
@@ -75,31 +116,66 @@ const promptEmployee = () => {
         {
             type: 'input',
             name: 'name',
-            message: "What is the employee's name?"
+            message: "What is the employee's name? (Required)",
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                } else {
+                    console.log("You need to enter the employee's name.")
+                }
+            }
         },
         {
             type: 'input',
             name: 'id',
-            message: "What is the employee's ID number?"
+            message: "What is the employee's ID number? (Required - Number)",
+            validate: idInput => {
+                if (isNaN(idInput)) {
+                    console.log("Employee's ID is required and must be a number.")
+                } else {
+                    return true;
+                }
+            }
         },
         {
             type: 'input',
             name: 'email',
-            message: "What is the employee's email address?"
+            message: "What is the employee's email address? (Required)",
+            validate: emailInput => {
+                if (emailInput) {
+                    return true;
+                } else {
+                    console.log("You need to enter the employee's email.")
+                }
+            }
         },
         //if engineer then prompt for github
         {
             type: 'input',
             name: 'github',
-            message: "What is the engineer's GitHub profile name?",
-            when: (input) => input.role === 'Engineer'
+            message: "What is the engineer's GitHub profile name? (Required)",
+            when: (input) => input.role === 'Engineer',
+            validate: githubInput => {
+                if (githubInput) {
+                    return true;
+                } else {
+                    console.log("You need to enter the engineer's GitHub username")
+                }
+            }
         },
         //if intern prompt for school
         {
             type: 'input',
             name: 'school',
-            message: "What school is the intern from?",
-            when: (input) => input.role === 'Intern'
+            message: "What school is the intern from? (Required)",
+            when: (input) => input.role === 'Intern',
+            validate: schoolInput => {
+                if (schoolInput) {
+                    return true;
+                } else {
+                    console.log("You need to enter the intern's university.")
+                }
+            }
         },
         // if true add another employee start over at role
         //if false end prompts
@@ -123,7 +199,7 @@ const promptEmployee = () => {
         }
         teamData.push(employee);
 
-
+        //if statement to restart promptEmployee 
         if (addConfirm) {
             return promptEmployee(teamData);
         } else {
@@ -144,14 +220,15 @@ const writeFile = data => {
     })
 };
 
-promptManager()
-    .then(promptEmployee)
-    .then(teamData => {
+//app initialization
+promptManager() //prompt manager questions
+    .then(promptEmployee) //prompt employee questions
+    .then(teamData => { //retun pageBuilder using teamData
         return pageBuilder(teamData);
     })
-    .then(writeHTML => {
+    .then(writeHTML => { //write the HTML file in designated path
         return writeFile(writeHTML);
     })
-    .catch(err => {
+    .catch(err => { //catch errors
         console.log(err);
     });
