@@ -120,7 +120,7 @@ const HTMLtemplate = function (cardDeck) {
     </div>
     
 
-    <footer class="bg-dark text-success text-center pt-2 pb-2 mt-5 fixed-bottom">&copy2022 Eric Bates</footer>
+    <footer class="bg-dark text-success text-center pt-2 pb-2 mt-5 ">&copy2022 Eric Bates</footer>
 </body>
 
 </html>`;
