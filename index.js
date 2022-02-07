@@ -66,7 +66,8 @@ const promptManager = () => {
             name: 'email',
             message: "What is the manager's email address? (required)",
             validate: emailInput => {
-                if (emailInput) {
+                const emailMatch = emailInput.match(/\S+@\S+\.\S+/)
+                if (emailMatch) {
                     return true;
                 } else {
                     console.log("You need to enter the manager's email.")
@@ -86,7 +87,6 @@ const promptManager = () => {
             }
         }
     ]).then(mgrInput => {
-        // let { name, id, email, office } = inputMGMT;
         let manager = new Manager(mgrInput.name, mgrInput.id, mgrInput.email, mgrInput.office);
         teamData.push(manager);
         console.log(manager);
