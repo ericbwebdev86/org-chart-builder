@@ -65,27 +65,6 @@ pageBuilder = (data) => {
         .map(engineer => buildEngineerCard(engineer)));
     teamCardArray.push(data.filter(employee => employee.getRole() === 'Intern')
         .map(intern => buildInternCard(intern)));
-
-    // for (let i = 0; i < data.length; i++) {
-    //     let teamMember = data[i];
-    //     let role = teamMember.getRole();
-
-    //     //manager card
-    //     if (role === 'Manager') {
-    //         let mCard = buildManagerCard(teamMember);
-    //         teamCardArray.push(mCard);
-    //     }
-    //     //engineer card
-    //     if (role === 'Engineer') {
-    //         let eCard = buildEngineerCard(teamMember);
-    //         teamCardArray.push(eCard);
-    //     }
-    //     //intern card
-    //     if (role === 'Intern') {
-    //         let iCard = buildInternCard(teamMember);
-    //         teamCardArray.push(iCard);
-    //     }
-    // }
     // //join card arrays to single array 
     const cardDeck = teamCardArray.join('');
     const buildPage = HTMLtemplate(cardDeck);
