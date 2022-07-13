@@ -3,17 +3,24 @@
 
   ## Table of Contents
   1. [Description](#description)
-  2. [Installation](#installation)
-  3. [Usage](#usage)
-  4. [Credits](#credits)
-  5. [Test](#test)
-  6. [Contact](#contact)
-  7. [License](#license)
+  2. [Tech Used](#Tech-Used)
+  3. [Installation](#installation)
+  4. [Usage](#usage)
+  5. [Credits](#credits)
+  6. [Test](#test)
+  7. [Contact](#contact)
+  8. [License](#license)
   
 
   ## Description
-  This is a command-line application powered by Node.JS and the Jest and Inquirer packages. This takes input on a manager, and employees; either engineers or interns, with different information for each. It then takes that input and populates cards for each employee on a website that is styled with BootStrap.
+  This is a command-line application powered by Node.JS and the Jest and Inquirer packages. This takes input on a manager, and employees; either engineers or interns, with different information for each.
 
+## Tech Used
+* javascript
+* nodejs
+* mysql
+* sequlize
+* inquirer
 
   ## Installation
   Clone the code from https://github.com/ericbwebdev86/org-chart-builder and run npm install to download the dependencies.
